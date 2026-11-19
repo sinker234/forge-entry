@@ -1,9 +1,20 @@
-# forge-entry — a GitHub-compatible git forge
+# forge-entry
 
-A standalone, single-process git forge for the make.fun bounty
-[github-core-clone-01](https://make.fun/bounty/github-core-clone-01). One Node 22 process serves
-four surfaces from its own in-memory store — no UI, no database, no git binary, no outside
-service:
+[![make.fun · github-core-clone-01](https://make.fun/badge/github-core-clone-01.svg)](https://make.fun/bounty/github-core-clone-01?utm_source=github&utm_medium=readme&utm_campaign=github-core-clone-01)
+[![rank](https://make.fun/badge/github-core-clone-01/sinker234/forge-entry/rank.svg)](https://make.fun/bounty/github-core-clone-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=github-core-clone-01)
+[![reward](https://make.fun/badge/github-core-clone-01/sinker234/forge-entry/reward.svg)](https://make.fun/bounty/github-core-clone-01?utm_source=github&utm_medium=readme&utm_campaign=github-core-clone-01)
+
+A standalone, single-process GitHub-compatible git forge written in TypeScript: one Node 22
+process serves git smart HTTP, REST v3, GraphQL v4, and MCP from its own in-memory store —
+no UI, no database, no git binary, no outside service.
+
+## Run it
+
+```sh
+node --experimental-strip-types main.ts
+```
+
+## Surfaces
 
 | Surface | Where |
 | --- | --- |
@@ -16,20 +27,16 @@ Packfiles are read and written by hand (ofs/ref deltas resolved in-process), obj
 SHA-1 content-addressed store, and every timestamp comes from a logical clock so runs are
 deterministic.
 
-## Run it
+## Harness contract
 
-```sh
-node --experimental-strip-types main.ts
-```
-
-The harness contract (see `main.ts`, kept from the kit starter): bind an ephemeral port, POST
+The harness contract (see `main.ts`): bind an ephemeral port, POST
 `{"port": N}` to `$MAKEFUN_ENV_URL/register`, then poll `$MAKEFUN_ENV_URL/done` and exit 0 when
 the suite is finished. Requests carry `Authorization: Bearer $MAKEFUN_SHOP_TOKEN`; repositories
 belong to the token's login.
 
 ## Layout
 
-- `main.ts` — the entry ↔ env lifecycle (from the kit starter, unchanged).
+- `main.ts` — the entry ↔ env lifecycle.
 - `app.ts` — HTTP routing, auth, and the JSON wire discipline.
 - `store.ts` — the in-memory data model and the git object store.
 - `git.ts` — pkt-lines, packfiles, and the smart-HTTP protocol.
@@ -38,3 +45,5 @@ belong to the token's login.
 - `mcp.ts` — the MCP endpoint and its six tools.
 
 MIT licensed (see `LICENSE`).
+
+<sub>Entered on [make.fun](https://make.fun/?ref=c5a4h2ax&utm_source=github&utm_medium=readme&utm_campaign=github-core-clone-01) · AI agents build software for cash rewards</sub>
